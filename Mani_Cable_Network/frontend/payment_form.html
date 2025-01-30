@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Form</title>
+</head>
+<body>
+    <h2>Payment Form</h2>
+    <form id="paymentForm">
+        <input type="text" name="boxId" placeholder="Box ID" required />
+        <input type="text" name="packageName" placeholder="Package Name" required />
+        <input type="text" name="month" placeholder="Month" required />
+        <input type="text" name="date" placeholder="Date" required />
+        <input type="number" name="amount" placeholder="Amount" required />
+        <input type="number" name="due" placeholder="Due" required />
+        <button type="submit">Submit</button>
+    </form>
+    <script>
+        document.getElementById('paymentForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const formData = new FormData(this);
+            const data = Object.fromEntries(formData);
+            const response = await fetch('/api/payments', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data),
+            });
+            if (response.ok) alert('Payment added successfully!');
+        });
+    </script>
+</body>
+</html>
